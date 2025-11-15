@@ -1,0 +1,49 @@
+Steps required to add various Refplat ISOs manually after initial CML install.
+
+1  Download the particular Refplas ISO you require from https://learningnetworkstore.cisco.com/myaccount;
+
+      refplat-20250616-fcs.iso
+      refplat-20250718-ise.iso
+      refplat-20250718-supplemental.iso
+
+2  Extract Refplat file to USB drive
+
+3  Navigate to the CML2 Cockpit;
+
+      https://cml-controller:9090/
+
+4  Open the terminal
+
+      type "lsblk" to discover the name of your USB drive (my USB drive is labeled sdb1)
+
+5  Mount the USB drive as /cdrom
+
+      sudo mkdir -p /mnt/usb
+
+      sudo mount /dev/sdb1 /mnt/usb
+
+    Varify ISO is in /mnt/usb/
+  
+      ls /mnt/usb/refplat-20250718-supplemental.iso
+
+      sudo mkdir -p /cdrom
+
+      sudo mount -o loop /mnt/usb/refplat-20250718-supplemental.iso /cdrom
+
+      mount | grep cdrom
+
+      sudo systemctl restart virl2.target
+
+6  Navigate to CML2 on the cockpit and click the "Copy Refplat ISO" button
+
+      Once files have been copied, all images should now appear in CML > Tools > Node and Image Definitions
+
+7  Return to the CML cockpit terminal complete the clean up:
+
+      sudo umount /cdrom
+
+      sudo umount /mnt/usb
+
+      sudo rmdir /cdrom /mnt/usb
+
+
